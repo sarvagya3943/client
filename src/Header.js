@@ -2,9 +2,7 @@ import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import SvgIcon from '@material-ui/core/SvgIcon'
 import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
 import PhoneIcon from '@material-ui/icons/Phone'
 import MobileIcon from '@material-ui/icons/StayCurrentPortrait'
 import AccountCircle from '@material-ui/icons/AccountCircle'
@@ -59,13 +57,13 @@ const styles = theme => ({
         color : '#464444'
     }
 }) ;
-function HomeIcon(props) {
-    return (
-        <SvgIcon {...props}>
-            <path d="M58.7.2H48l-4.7 9-4.6-9H28l10 20v9.3h10.6V20L58.6.3zm13-.2c-8.4 0-15 6.7-15 15s6.6 15 15 15c8.2 0 15-6.7 15-15s-6.8-15-15-15zm0 20.3c-3 0-5.5-2.4-5.5-5.3 0-3 2.4-5.3 5.4-5.3 3 0 5.3 2.3 5.3 5.3s-2.5 5.3-5.4 5.3zM15 0C6.7 0 0 6.7 0 15s6.7 15 15 15 15-6.7 15-15S23.3 0 15 0zm0 20.3c-3 0-5.3-2.4-5.3-5.3 0-3 2.4-5.3 5.3-5.3 3 0 5.3 2.3 5.3 5.3S18 20.3 15 20.3z"/>
-        </SvgIcon>
-    )
-}
+// function HomeIcon(props) {
+//     return (
+//         <SvgIcon {...props}>
+//             <path d="M58.7.2H48l-4.7 9-4.6-9H28l10 20v9.3h10.6V20L58.6.3zm13-.2c-8.4 0-15 6.7-15 15s6.6 15 15 15c8.2 0 15-6.7 15-15s-6.8-15-15-15zm0 20.3c-3 0-5.5-2.4-5.5-5.3 0-3 2.4-5.3 5.4-5.3 3 0 5.3 2.3 5.3 5.3s-2.5 5.3-5.4 5.3zM15 0C6.7 0 0 6.7 0 15s6.7 15 15 15 15-6.7 15-15S23.3 0 15 0zm0 20.3c-3 0-5.3-2.4-5.3-5.3 0-3 2.4-5.3 5.3-5.3 3 0 5.3 2.3 5.3 5.3S18 20.3 15 20.3z"/>
+//         </SvgIcon>
+//     )
+// }
 function Header(props) {
     const { classes } = props ;
     return (
@@ -88,8 +86,8 @@ function Header(props) {
                             </Typography>
                         </div>
                         <div className={classes.container}>
-                            <AccountCircle className={classes.icon} />
-                            <Typography className={classes.text2}><a style={{textDecoration:'none',color:'#464444'}} >Login / Sign Up</a></Typography>
+                            <a onClick={props.handleLoginOpen} style={{cursor:'pointer'}}><AccountCircle className={classes.icon} /></a>
+                            <Typography className={classes.text2}><a onClick={props.handleLoginOpen} style={{textDecoration:'none',color:'#464444',cursor:'pointer'}} >Login / Sign Up</a></Typography>
                         </div>
                         <div className={classes.container}>
                             <HelpIcon className={classes.icon} />
