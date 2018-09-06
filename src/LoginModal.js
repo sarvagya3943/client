@@ -10,6 +10,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import EmailIcon from '@material-ui/icons/Email'
 import Tooltip from '@material-ui/core/Tooltip'
+import Snackbar from '@material-ui/core/Snackbar'
 
 const styles = {
     title : {
@@ -56,6 +57,10 @@ const styles = {
     register : {
         flexGrow : 1 , 
         marginRight : '-15px'
+    } , 
+    snackbar : {
+        width : '400px' ,
+        height : '100px'
     }
 }
 class LoginModal extends React.Component {
@@ -63,16 +68,32 @@ class LoginModal extends React.Component {
         super(props) ; 
         this.state = {
             showPassword : false , 
-            email : '' , 
-            password : '' , 
+            user : {
+                email : '' , 
+                password : ''
+            } ,
             errors : { 
                 password : ''
-            }
+            } ,
+            openSnackBar : false
         }
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this) ;
         this.openRegisterModal = this.openRegisterModal.bind(this) ;
-        this.handleEmailChange = this.handleEmailChange.bind(this) ;
-        this.handlePasswordChange = this.handlePasswordChange.bind(this) ;
+        this.handleChange = this.handleChange.bind(this) ;
+        this.handleSnackClose = this.handleSnackClose.bind(this) ;
+        this.check = this.check.bind(this) ;
+    }
+    check = () => {
+        let formOk = true ;
+        console.log(Object.keys(this.state.errors)) ;
+        Object.keys(this.state.errors).forEach(key => {
+            if(this.state.errors[key] !== "") {
+                formOk = false ;
+            }
+        })
+        if(!formOk) {
+            this.setState({openSnackBar : true}) ;
+        }
     }
     handleClickShowPassword = () => {
         this.setState(prev => ({
@@ -86,50 +107,56 @@ class LoginModal extends React.Component {
         this.props.handleClose() ;
         this.props.openRegister() ;
     }
-    handleEmailChange = event => {
-        this.setState({email : event.target.value})
-    }
-    handlePasswordChange = event => {
-        this.setState({password : event.target.value})
-        if(this.state.password.length < 8) {
-            this.setState(prev => {
-                return {
-                    errors : {
-                        password : 'Password is too short! Should be atleast 8 characters'
-                    }
-                }
-            })
-        } else {
-            this.setState(prev => {
-                return {
-                    errors : {
-                        password : ''
-                    }
-                }
-            })
+    handleChange = event => {
+        let inputName = event.target.name ;
+        let inputVal = event.target.value ;
+        let newState = Object.assign({} , this.state) ;
+        newState.user[inputName] = inputVal ;
+        if(inputName === "password") {
+            if(inputVal.length < 8) newState.errors.password = 'Too short , should be atleast 8 characters' ;
+            else newState.errors.password = '' ;
         }
+        this.setState(newState) ;
+    }
+    handleSnackClose = (event , reason) => {
+        if(reason === 'clickaway') return ;
+        this.setState({openSnackBar : false}) ;
     }
     render() {
         const { classes } = this.props ;
         return (
-            <Dialog
+            <div>
+                <Snackbar
+                    className={classes.snackbar}
+                    anchorOrigin={{
+                        vertical : 'top' , 
+                        horizontal : 'center'
+                    }}
+                    open={this.state.openSnackBar}
+                    autoHideDuration={3000}
+                    onClose={this.handleSnackClose}
+                    message={<span>There are errors in your form</span>}
+                    action={[<IconButton key="close"><CloseIcon style={{color : 'white'}}/></IconButton>]}>
+                </Snackbar>
+                <Dialog
                 open={this.props.open}
                 onClose={this.props.handleClose}
                 disableBackdropClick={true}>
+                
                 <DialogTitle className={classes.title} disableTypography={true}>
                     <div className={classes.titleText}>Enter Credentials to Login</div>
                     <CloseIcon onClick={this.props.handleClose} className={classes.closeIcon} />
                 </DialogTitle>
                 <DialogContent className={classes.container}>
                     <form className={classes.Form}>
-                        <TextField value = {this.state.email} onChange={this.handleEmailChange} className={classes.input} label="Email ID" type="email"
+                        <TextField value = {this.state.user.email} name="email" onChange={this.handleChange} className={classes.input} label="Email ID" type="email"
                             required={true}
                             autoFocus={true}
                             InputProps={{
                                 endAdornment : <InputAdornment position="end"><IconButton><EmailIcon /></IconButton></InputAdornment>
                             }}
                             />
-                        <TextField value={this.state.password} onChange={this.handlePasswordChange} label="Password" type={this.state.showPassword ? "text" : "password"}
+                        <TextField value={this.state.user.password} name="password" onChange={this.handleChange} label="Password" type={this.state.showPassword ? "text" : "password"}
                             required={true}
                             className={classes.input}
                             InputProps={{
@@ -143,7 +170,10 @@ class LoginModal extends React.Component {
                             }}
                             helperText={this.state.errors.password}
                             />
-                        <Button type="submit" variant="raised" className={classes.loginButton} size="large">
+                        {/* <Button type="submit" variant="raised" className={classes.loginButton} size="large">
+                            LOGIN
+                        </Button> */}
+                        <Button onClick={this.check} variant="raised" className={classes.loginButton} size="large">
                             LOGIN
                         </Button>
                     </form>
@@ -153,6 +183,7 @@ class LoginModal extends React.Component {
                     </div>
                 </DialogContent>
             </Dialog>
+            </div>
         )
     }
 }

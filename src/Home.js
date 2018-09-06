@@ -7,8 +7,8 @@ class Home extends React.Component {
     constructor(props) {
         super(props) ;
         this.state = {
-            loginModalOpen : false , 
-            registerModalOpen : true 
+            loginModalOpen : true , 
+            registerModalOpen : false 
         }
         this.handleLoginClose = this.handleLoginClose.bind(this);
         this.handleLoginOpen = this.handleLoginOpen.bind(this) ; 

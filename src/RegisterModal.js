@@ -82,10 +82,21 @@ class RegisterModal extends React.Component {
         super(props) ;
         this.state = {
             showPassword : false , 
-            genderVal : 'Male'
+            user : {
+                firstName : '' , 
+                lastName : '' , 
+                email : '' , 
+                password : '' ,
+                mobileNum : '' , 
+                gender : ''
+            } , 
+            errors : {
+                firstName : '' , 
+                lastName : ''
+            }
         }
         this.handleClickShowPassword = this.handleClickShowPassword.bind(this) ;
-        this.handleGenderChange = this.handleGenderChange.bind(this) ;
+        this.handleChange = this.handleChange.bind(this) ;
         this.openLoginModal = this.openLoginModal.bind(this) ;
     }
     handleClickShowPassword = () => {
@@ -93,8 +104,29 @@ class RegisterModal extends React.Component {
             showPassword : !prev.showPassword
         }))
     }
-    handleGenderChange = event => {
-        this.setState({genderVal : event.target.value})
+    
+    handleChange = event => {
+        let inputName = event.target.name ;
+        let inputVal = event.target.value ;
+        let newState = Object.assign({} , this.state) ;
+        newState.user[inputName] = inputVal ;
+        if(inputName === "firstName") {
+            if(/[a-zA-Z]+$/.test(inputVal) === true) newState.errors.firstName = '' ;
+            else newState.errors.firstName = 'First name cant contain digits!' ;
+        }
+        if(inputName === "lastName") {
+            if(/[a-zA-Z]+$/.test(inputVal) === true) newState.errors.lastName = '' ;
+            else newState.errors.lastName = 'Last name cant contain digits!' ;
+        }
+        if(inputName === "mobileNum") {
+            if(/^[1-9]\d{9}$/.test(inputVal) === true) newState.errors.mobileNum = '' ;
+            else newState.errors.mobileNum = 'Number should be exactly 10 digits long and cant contain non digit characters and shouldnt start with zero'
+        }
+        if(inputName === "password") {
+            if(inputVal.length < 8) newState.errors.password = 'Too short , should be atleast 8 characters' ;
+            else newState.errors.password = '' ;
+        }
+        this.setState(newState) ;
     }
     componentDidMount = () => {
         document.body.style.overflow = 'auto' ;
@@ -116,27 +148,29 @@ class RegisterModal extends React.Component {
                 </DialogTitle>
                 <DialogContent className={classes.container}>
                     <form className={classes.Form}>
-                        <TextField className={classes.input} label="First Name" type="text"
+                        <TextField value={this.state.user.firstName || ''} onChange={this.handleChange} className={classes.input} name="firstName" label="First Name" type="text"
                             required={true}
                             InputProps={{
                                 endAdornment : <InputAdornment position="end"><IconButton><PersonIcon /></IconButton></InputAdornment>
                             }}
+                            helperText={this.state.errors.firstName}
                             />
-                        <TextField className={classes.input} label="Last Name" type="text"
+                        <TextField value={this.state.user.lastName || ''} onChange={this.handleChange} className={classes.input} name="lastName" label="Last Name" type="text"
                             required={true}
                             InputProps={{
                                 endAdornment : <InputAdornment position="end"><IconButton><PersonIcon /></IconButton></InputAdornment>
                             }}
+                            helperText={this.state.errors.lastName}
                             />
                         
-                        <TextField className={classes.input} label="Email ID" type="email"
+                        <TextField value={this.state.user.email || ''} onChange={this.handleChange} className={classes.input} name="email" label="Email ID" type="email"
                             required={true}
                             autoFocus={true}
                             InputProps={{
                                 endAdornment : <InputAdornment position="end"><IconButton><EmailIcon /></IconButton></InputAdornment>
                             }}
                             />
-                        <TextField label="Password" type={this.state.showPassword ? "text" : "password"}
+                        <TextField value={this.state.user.password || ''} onChange={this.handleChange} label="Password" name="password" type={this.state.showPassword ? "text" : "password"}
                             required={true}
                             className={classes.input}
                             InputProps={{
@@ -147,15 +181,18 @@ class RegisterModal extends React.Component {
                                     </IconButton>
                                     </Tooltip>
                                 </InputAdornment>
-                            }}/>
-                        <TextField className={classes.input} label="Mobile Number" type="text"
+                            }}
+                            helperText={this.state.errors.password}
+                            />
+                        <TextField value={this.state.user.mobileNum || ''} onChange={this.handleChange} name="mobileNum" className={classes.input} label="Mobile Number" type="text"
                             required={true}
                             InputProps={{
                                 endAdornment : <InputAdornment position="end"><IconButton><SmartPhoneIcon /></IconButton></InputAdornment>
                             }}
+                            helperText={this.state.errors.mobileNum}
                             />
                         <FormControl className={classes.form_control}>
-                            <RadioGroup value={this.state.genderVal} onChange={this.handleGenderChange} name="gender" className={classes.radio_group}>
+                            <RadioGroup value={this.state.user.gender || 'Male'} onChange={this.handleChange} name="gender" className={classes.radio_group}>
                                 <FormControlLabel value="Male" label="Male" control={<Radio />}/>
                                 <FormControlLabel value="Female" label="Female" control={<Radio />}/>
                                 <FormControlLabel value="Other" label="Other" control={<Radio />}/>
