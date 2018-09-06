@@ -69,7 +69,7 @@ class Home extends React.Component {
                 <LoginModal open={this.state.loginModalOpen} handleClose={this.handleLoginClose} openRegister={this.handleRegisterOpen} />
                 <RegisterModal open={this.state.registerModalOpen} handleClose={this.handleRegisterClose} openLogin={this.handleLoginOpen} />
             </div>
-
+            {/*bla bla*/}
         )
     }
 }
