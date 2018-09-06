@@ -3,7 +3,10 @@ import {withStyles} from '@material-ui/core/styles'
 import LocationIcon from '@material-ui/icons/EditLocation'
 import CloseIcon from '@material-ui/icons/Close'
 import Textfield from '@material-ui/core/TextField'
-import { InputAdornment } from '@material-ui/core';
+import { InputAdornment } from '@material-ui/core'
+import { InlineDatePicker } from 'material-ui-pickers/DatePicker'
+import LeftArrowIcon from '@material-ui/icons/KeyboardArrowLeft'
+import RightArrowIcon from '@material-ui/icons/KeyboardArrowRight'
 
 const styles = {
     searchForm : {
@@ -41,6 +44,16 @@ const styles = {
     }
 }
 class SearchForm extends React.Component {
+    constructor(props) {
+        super(props) ; 
+        this.state = {
+            selectedDate : ''
+        }
+        this.handleChange = this.handleChange.bind(this) ;
+    }
+    handleChange = date => {
+        this.setState({selectedDate : date}) ;
+    }
     render() {
         const { classes } = this.props ;
         return (
@@ -53,6 +66,23 @@ class SearchForm extends React.Component {
                             startAdornment : <InputAdornment style={{marginTop:'5px'}} position="start"><LocationIcon className={classes.iconLoc} /></InputAdornment> ,
                             endAdornment : <InputAdornment style={{marginTop:'5px'}} position="end"><CloseIcon className={classes.iconClose} /></InputAdornment>
                         }}
+                        placeholder="Search for a city"
+                    />
+                </div>
+                <div className={classes.searchDate}>
+                    <InlineDatePicker 
+                        leftArrowIcon={<LeftArrowIcon />}
+                        rightArrowIcon={<RightArrowIcon />}
+                        value = {this.state.selectedDate} 
+                        onChange={this.handleChange}
+                        disablePast={true}
+                    />
+                    <InlineDatePicker 
+                        leftArrowIcon={<LeftArrowIcon />}
+                        rightArrowIcon={<RightArrowIcon />}
+                        value = {this.state.selectedDate} 
+                        onChange={this.handleChange}
+                        disablePast={true}
                     />
                 </div>
             </form>
