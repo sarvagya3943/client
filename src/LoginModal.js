@@ -73,7 +73,7 @@ class LoginModal extends React.Component {
                 password : ''
             } ,
             errors : { 
-                password : ''
+                password : 'Too short , should be atleast 8 characters'
             } ,
             openSnackBar : false
         }
@@ -85,7 +85,6 @@ class LoginModal extends React.Component {
     }
     check = () => {
         let formOk = true ;
-        console.log(Object.keys(this.state.errors)) ;
         Object.keys(this.state.errors).forEach(key => {
             if(this.state.errors[key] !== "") {
                 formOk = false ;
@@ -93,6 +92,8 @@ class LoginModal extends React.Component {
         })
         if(!formOk) {
             this.setState({openSnackBar : true}) ;
+        } else {
+            console.log(this.state.user) ;
         }
     }
     handleClickShowPassword = () => {
@@ -136,7 +137,7 @@ class LoginModal extends React.Component {
                     autoHideDuration={3000}
                     onClose={this.handleSnackClose}
                     message={<span>There are errors in your form</span>}
-                    action={[<IconButton key="close"><CloseIcon style={{color : 'white'}}/></IconButton>]}>
+                    action={[<IconButton onClick={this.handleSnackClose} key="close"><CloseIcon style={{color : 'white'}}/></IconButton>]}>
                 </Snackbar>
                 <Dialog
                 open={this.props.open}
