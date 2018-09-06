@@ -49,27 +49,26 @@ class Home extends React.Component {
             <div>
                 <Header handleLoginOpen={this.handleLoginOpen} />
                 {/* banner */}
-                <div style={{
-                    marginTop: '65px'
-                }}>
+                <div style={{position:'relative'}}>
                     <img alt="Monsoon banner" src={banner} style={{
                         width: '100%'
                     }} />
-                </div>
-                <div style={{
-                    backgroundImage : 'linear-gradient(180deg,rgba(0,0,0,.1) 0,rgba(0,0,0,.1) 100%)' , 
-                    position : 'absolute' , 
-                    zIndex : '0 !important'
-                }}>
-                    {/* amenities */}
-                    <Amenities />
-                    {/* Search Form */}
-                    <SearchForm />
+                    <div style={{
+                        backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 0,rgba(0,0,0))',
+                        position: 'absolute' , 
+                        width : '100%' , 
+                        marginTop : '-150px' , 
+                        height : '30%'
+                    }}>
+                        {/* amenities */}
+                        <Amenities />
+                        {/* Search Form */}
+                        <SearchForm />
+                    </div>
                 </div>
                 <LoginModal open={this.state.loginModalOpen} handleClose={this.handleLoginClose} openRegister={this.handleRegisterOpen} />
                 <RegisterModal open={this.state.registerModalOpen} handleClose={this.handleRegisterClose} openLogin={this.handleLoginOpen} />
             </div>
-            {/*bla bla*/}
         )
     }
 }

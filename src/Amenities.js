@@ -10,23 +10,22 @@ import { withStyles } from '@material-ui/core/styles'
 const styles = {
     container : {
         display : 'flex' , 
-        color : 'white' , 
-        marginTop : '-150px' , 
-        zIndex : '3'
+        color : 'white' 
     } ,
     heading : {
         marginLeft : '400px' , 
         marginTop : '10px' , 
         fontSize : '14px' , 
-        color : 'white'
+        color : 'white' , 
+        letterSpacing : '1px'
     } ,
     content_list : {
         display : 'flex' ,
-        marginLeft : '240px'
+        marginLeft : '250px'
     } , 
     list_item : {
-        width : '60px',
-        marginLeft : '15px' , 
+        width : 'auto',
+        marginLeft : '50px' , 
         textAlign : 'center'
     } ,
     icon : {
@@ -42,7 +41,7 @@ class Amenities extends React.Component {
         const { classes } = this.props ;
         return (
             <div className = {classes.container}>
-                <Typography className={classes.heading}>Features in all OYOs</Typography>
+                <Typography className={classes.heading}>FEATURES IN ALL OYOs</Typography>
                 <div className={classes.content_list}>
                     <div className={classes.list_item}>
                         <AcIcon />
