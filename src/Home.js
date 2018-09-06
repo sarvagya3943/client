@@ -54,11 +54,11 @@ class Home extends React.Component {
                         width: '100%'
                     }} />
                     <div style={{
-                        backgroundImage: 'linear-gradient(rgba(0,0,0,0.1) 0,rgba(0,0,0))',
+                        backgroundImage: 'linear-gradient(rgba(0,0,0,0.005),rgba(0,0,0,0.8))',
                         position: 'absolute' , 
                         width : '100%' , 
                         marginTop : '-150px' , 
-                        height : '30%'
+                        height : '27%'
                     }}>
                         {/* amenities */}
                         <Amenities />
