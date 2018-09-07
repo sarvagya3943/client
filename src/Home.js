@@ -57,7 +57,7 @@ class Home extends React.Component {
                         backgroundImage: 'linear-gradient(rgba(0,0,0,0.005),rgba(0,0,0,0.8))',
                         position: 'absolute' , 
                         width : '100%' , 
-                        marginTop : '-150px' , 
+                        marginTop : '-165px' , 
                         height : '27%'
                     }}>
                         {/* amenities */}
